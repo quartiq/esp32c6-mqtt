@@ -1,0 +1,46 @@
+[package]
+name = "xiao-telemetry"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+defmt = "1.1"
+embassy-futures = "0.1"
+embassy-sync = "0.8"
+embassy-time = "0.5.1"
+miniconf = { version = "0.22", features = ["derive", "json-core", "sem", "meta-edge"] }
+miniconf_mqtt = "0.23"
+minimq = "0.13.5"
+serde = { version = "1", default-features = false, features = ["derive"] }
+serde-json-core = "0.7"
+
+[target.'cfg(target_os = "none")'.dependencies]
+bh1750-embedded = { version = "0.1", features = ["async"] }
+defmt-rtt = { version = "1.3", features = ["disable-blocking-mode"] }
+embassy-embedded-hal = "0.6"
+embassy-executor = "0.10"
+embassy-net = { version = "0.9.1", features = ["dhcpv4", "dns", "tcp", "medium-ethernet", "defmt"] }
+esp-alloc = { version = "0.11", features = ["esp32c6"] }
+esp-bootloader-esp-idf = { version = "0.6", features = ["esp32c6"] }
+esp-hal = { version = "1.2.2", features = ["esp32c6", "unstable", "defmt"] }
+esp-radio = { version = "=1.0.0-beta.1", features = ["esp32c6", "wifi", "defmt"] }
+esp-rtos = { version = "0.4", features = ["esp32c6", "embassy", "esp-radio", "defmt"] }
+heapless = "0.9"
+sht4x = { version = "0.2", features = ["embedded-hal-async"] }
+static_cell = "2"
+
+[dev-dependencies]
+critical-section = { version = "1", features = ["std"] }
+defmt2log = "0.2"
+embassy-time = { version = "0.5.1", features = ["std", "generic-queue-8"] }
+embedded-io-adapters = { version = "0.7", features = ["tokio-1"] }
+serde_json = "1"
+tokio = { version = "1", features = ["rt", "macros", "net", "time", "io-util", "process", "sync"] }
+
+[profile.release]
+debug = 2
+lto = "fat"
+codegen-units = 1
+opt-level = "s"
+overflow-checks = true
